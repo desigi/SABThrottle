@@ -30,11 +30,9 @@ active = get_active_streams(PMS_URL)
 
 if active >= '1':
 	url = SAB_PAUSE
-	print url
 	req = urllib2.Request(url)
 	result = urllib2.urlopen(req)
 elif active == '0':
         url = SAB_RESUME
-	print url
         req = urllib2.Request(url)
         result = urllib2.urlopen(req)
