@@ -28,22 +28,22 @@ def get_active_streams(plex_url):
 
 def sab_queue_status(sab_url):
     response = requests.get(sab_url)
-    json_output = json.loads(response.text)
-    return json_output['queue']['paused']
+    json_out = json.loads(response.text)
+    return json_out['queue']['paused']
 
 def set_queue_state(streams):
     if streams >= '1':
         while True:
-            url = SAB_PAUSE
-            req = urllib2.Request(url)
+            url_pause = SAB_PAUSE
+            req = urllib2.Request(url_pause)
             result = urllib2.urlopen(req)
             is_paused = sab_queue_status(SAB_QUEUE)
             if is_paused == 'true':
                 break
     elif streams == '0':
         while True:
-            url = SAB_RESUME
-            req = urllib2.Request(url)
+            url_resume = SAB_RESUME
+            req = urllib2.Request(url_resume)
             result = urllib2.urlopen(req)
             is_paused = sab_queue_status(SAB_QUEUE)
             if is_paused == 'false':
