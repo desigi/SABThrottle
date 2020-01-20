@@ -21,13 +21,13 @@ SAB_RESUME = 'http://%s/sabnzbd/api?mode=resume&apikey=%s' % (SAB_URI, SAB_API)
 SAB_QUEUE = 'http://%s/sabnzbd/api?mode=queue&apikey=%s' % (SAB_URI, SAB_API)
 
 
-def get_active_streams(url):
-    response = requests.get(url)
+def get_active_streams(plex_url):
+    response = requests.get(plex_url)
     json_output = json.loads(response.text)
     return json_output['response']['data']['stream_count']
 
-def sab_queue_status(url):
-    response = requests.get(url)
+def sab_queue_status(sab_url):
+    response = requests.get(sab_url)
     json_output = json.loads(response.text)
     return json_output['queue']['paused']
 
