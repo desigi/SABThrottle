@@ -38,7 +38,7 @@ def set_queue_state(streams):
             req = urllib2.Request(url_pause)
             result = urllib2.urlopen(req)
             is_paused = sab_queue_status(SAB_QUEUE)
-            if is_paused == 'true':
+            if is_paused:
                 break
     elif streams == '0':
         while True:
@@ -46,7 +46,7 @@ def set_queue_state(streams):
             req = urllib2.Request(url_resume)
             result = urllib2.urlopen(req)
             is_paused = sab_queue_status(SAB_QUEUE)
-            if is_paused == 'false':
+            if not is_paused:
                 break
 
 active = get_active_streams(PMS_URL)
