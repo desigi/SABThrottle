@@ -18,7 +18,7 @@ SAB_API = config['SAB_API']
 PMS_URL = 'http://%s:%s/api/v2?apikey=%s&cmd=get_activity' % (PMS_IP, PMS_PORT, PMS_API)
 SAB_PAUSE = 'http://%s/sabnzbd/api?mode=pause&apikey=%s' % (SAB_URI, SAB_API)
 SAB_RESUME = 'http://%s/sabnzbd/api?mode=resume&apikey=%s' % (SAB_URI, SAB_API)
-SAB_QUEUE = 'http://%s/sabnzbd/api?mode=queue&apikey=%s' % (SAB_URI, SAB_API)
+SAB_QUEUE = 'http://%s/sabnzbd/api?output=json&mode=queue&apikey=%s' % (SAB_URI, SAB_API)
 
 
 def get_active_streams(plex_url):
