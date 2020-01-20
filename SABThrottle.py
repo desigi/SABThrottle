@@ -18,21 +18,37 @@ SAB_API = config['SAB_API']
 PMS_URL = 'http://%s:%s/api/v2?apikey=%s&cmd=get_activity' % (PMS_IP, PMS_PORT, PMS_API)
 SAB_PAUSE = 'http://%s/sabnzbd/api?mode=pause&apikey=%s' % (SAB_URI, SAB_API)
 SAB_RESUME = 'http://%s/sabnzbd/api?mode=resume&apikey=%s' % (SAB_URI, SAB_API)
-
+SAB_QUEUE = 'http://%s/sabnzbd/api?mode=queue&apikey=%s' % (SAB_URI, SAB_API)
 
 
 def get_active_streams(url):
-        response = requests.get(url)
-	json_output = json.loads(response.text)
-	return json_output['response']['data']['stream_count']
+    response = requests.get(url)
+    json_output = json.loads(response.text)
+    return json_output['response']['data']['stream_count']
+
+def sab_queue_status(url):
+    response = requests.get(url)
+    json_output = json.loads(response.text)
+    return json_output['queue']['paused']
+
+def set_queue_state(streams):
+    if streams >= '1':
+        while True:
+            url = SAB_PAUSE
+            req = urllib2.Request(url)
+            result = urllib2.urlopen(req)
+            is_paused = sab_queue_status(SAB_QUEUE)
+            if is_paused == 'true':
+                break
+    elif streams == '0':
+        while True:
+            url = SAB_RESUME
+            req = urllib2.Request(url)
+            result = urllib2.urlopen(req)
+            is_paused = sab_queue_status(SAB_QUEUE)
+            if is_paused == 'false':
+                break
 
 active = get_active_streams(PMS_URL)
 
-if active >= '1':
-	url = SAB_PAUSE
-	req = urllib2.Request(url)
-	result = urllib2.urlopen(req)
-elif active == '0':
-        url = SAB_RESUME
-        req = urllib2.Request(url)
-        result = urllib2.urlopen(req)
+set_queue_state(active)
