@@ -27,8 +27,8 @@ def get_active_streams(plex_url):
     return json_output['response']['data']['stream_count']
 
 def sab_queue_status(sab_url):
-    response = requests.get(sab_url)
-    json_out = json.loads(response.text)
+    res = requests.get(sab_url)
+    json_out = json.loads(res.text)
     return json_out['queue']['paused']
 
 def set_queue_state(streams):
